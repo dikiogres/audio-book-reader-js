@@ -7,7 +7,7 @@ async function setup(){
     });
     video.srcObject = stream;    
 
-    video.addEventListener("playing", async ()=>{
+    video.addEventListener("playing", async ()=>{ 
         const worker = Tesseract.createWorker();
         await worker.load();
         await worker.loadLanguage("eng");      
