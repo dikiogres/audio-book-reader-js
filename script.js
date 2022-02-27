@@ -1,4 +1,5 @@
-const video = document.querySelector("video")
+const video = document.querySelector("video");
+const textElem = document.querySelector("[data-text]")
 
 async function setup(){
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -17,7 +18,7 @@ async function setup(){
         canvas.height = video.height;
 
         document.addEventListener("keypress", async e => {
-            if (e.code !== "Space") return;
+            if (e.code !== "Space") return;           
         })
         canvas.getContext("2d").drawImage(
             video, 0, 0, video.width, video.height
@@ -25,7 +26,10 @@ async function setup(){
         const {
             data: { text },
         } = await worker.recognize(canvas);
-        console.log(text);
+
+        speechSynthesis.speak(new SpeechSynthesisUtterance(text.replace(/\s/g, " ")))
+        
+        textElem.textContent = text;
     })
 }
 
